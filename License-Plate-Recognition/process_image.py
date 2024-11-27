@@ -35,3 +35,13 @@ def process_image(imaging):
     cv2.imwrite(filename=path,img=image_sharpened)
     
     return path ,image_sharpened
+
+new_images_path = []
+new_images = []
+
+for i in tqdm(range(len(image_paths))):
+    path, edge_image = process_image(i)
+    new_images_path.append(path)
+    new_images.append(edge_image)
+
+create_animation(new_images)

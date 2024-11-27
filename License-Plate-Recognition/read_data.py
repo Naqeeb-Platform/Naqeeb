@@ -31,3 +31,27 @@ print(image_paths[0])
 print(text_paths[0])
 print(len(image_paths))
 print(len(text_paths))
+
+
+boxdata=[] # information of each bbox
+boxfile=[] # file names (without the full path)
+for i in range(len(text_paths)):
+    file=text_paths[i]
+    boxdata+=[np.loadtxt(file)]
+    boxfile+=[file[0:-4].split('/')[-1]]
+print(boxdata[0])
+print(boxfile[0])
+
+
+BOX=pd.DataFrame()
+for i in range(len(boxdata)):
+    if type(boxdata[i][0])==np.float64: # if its a 1d list
+        add=pd.DataFrame([boxdata[i]])
+        add[5]=boxfile[i]
+        BOX=pd.concat([BOX,add])
+    else: # if its 2d with multiple bboxes
+        add=pd.DataFrame(boxdata[i])
+        add[5]=boxfile[i]
+        BOX=pd.concat([BOX,add])
+BOX=BOX.reset_index(drop=True) # reset index and start from 0
+display(BOX)

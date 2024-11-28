@@ -36,3 +36,24 @@ def process_image(image_path, labels_dir, arabic_font, arabic_font_size):
             img = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
 
     return img
+
+# Path to the directory containing the images
+images_dir = "/kaggle/input/unseen-data"
+
+# Path to the directory containing the text files with bounding box coordinates
+labels_dir = "/kaggle/working/runs/detect/predict/labels"
+
+# Path to the Arabic font
+arabic_font_path = "/kaggle/input/arabic-font-data/Amiri-Bold.ttf"
+
+# Load the Arabic font
+arabic_font_size = 30
+arabic_font = ImageFont.truetype(arabic_font_path, arabic_font_size)
+
+processed_img = []
+for image_name in os.listdir(images_dir):
+    # Process each image
+    processed_img.append(process_image(os.path.join(images_dir, image_name), labels_dir, arabic_font, arabic_font_size))
+
+
+create_animation(processed_img)
